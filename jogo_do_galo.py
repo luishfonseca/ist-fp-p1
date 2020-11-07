@@ -136,6 +136,24 @@ def obter_posicoes_livres(tab):
 
     return vect
 
+# tab x int -> vect
+def obter_linhas_colunas_diagonais(tab, n):
+        lcds = ()
+
+        pos_l = ((n-1)//3)+1
+        lcds += (obter_linha(tab, pos_l), )
+
+        pos_c = ((n-1)%3)+1
+        lcds += (obter_coluna(tab, pos_c), )
+
+        if n in (1,5,9):
+            lcds += (obter_diagonal(tab, 1), )
+
+        if n in (3,5,7):
+            lcds += (obter_diagonal(tab, 2), )
+
+        return lcds
+
 # tab -> int
 def jogador_ganhador(tab):
     if not eh_tabuleiro(tab):
@@ -224,8 +242,10 @@ def escolher_posicao_auto(tab, p, strat):
     elif nivel >= 1 and bloqueio(tab, p):
         return bloqueio(tab, p)
     elif nivel == 2 and bifurcacao(tab, p):
+        print('bifurcacao', p)
         return bifurcacao(tab, p)
     elif nivel == 2 and bloqueio_bifurcacao(tab, p):
+        print('bloqueio_bifurcacao', p)
         return bloqueio_bifurcacao(tab, p)
     elif centro(tab):
         return centro(tab)
@@ -241,6 +261,11 @@ def escolher_posicao_auto(tab, p, strat):
 # - x -
 # - - +
 def vitoria(tab, p):
+    for pos in obter_posicoes_livres(tab):
+        for lcd in obter_linhas_colunas_diagonais(tab, pos):
+            if lcd.count(p) == 2:
+                return pos
+
     return None
 
 # tab x int -> pos (or None)
@@ -255,14 +280,35 @@ def bloqueio(tab, p):
 # - - -
 # * x -
 def bifurcacao(tab, p):
+    for pos in obter_posicoes_livres(tab):
+        total = 0
+        for lcd in obter_linhas_colunas_diagonais(tab, pos):
+            total += lcd.count(p)
+
+        if total >= 2:
+            return pos
+
     return None
 
 # tab x int -> pos (or None)
-# o - o
-# - * -
-# - - -
+# o - o  o o -
+# - * -  - x -
+# - - -  - - o
 def bloqueio_bifurcacao(tab, p):
-    return bifurcacao(tab, -p)
+    bifurcacoes = 0
+    for pos in obter_posicoes_livres(tab):
+        total = 0
+        for lcd in obter_linhas_colunas_diagonais(tab, pos):
+            total += lcd.count(-p)
+        if total >= 2:
+            bifurcacoes += 1
+
+    if bifurcacoes == 1:
+        return bifurcacao(tab, -p)
+    elif bifurcacoes > 1:
+        return lateral_vazio(tab)
+    else:
+        return None
 
 # tab x int -> pos (or None)
 # - - -
@@ -271,6 +317,7 @@ def bloqueio_bifurcacao(tab, p):
 def centro(tab):
     if eh_posicao_livre(tab, 5):
         return 5
+
     return None
 
 # tab x int -> pos (or None)
@@ -278,6 +325,13 @@ def centro(tab):
 # - - -
 # * - -
 def canto_oposto(tab, p):
+    for pos in (1,3,7,9):
+        if (
+            eh_posicao_livre(tab, pos) and
+            obter_valor_posicao(tab, 10-pos) == -p
+        ):
+            return pos
+
     return None
 
 # tab x int -> pos (or None)
@@ -288,6 +342,7 @@ def canto_vazio(tab):
     for pos in (1,3,7,9):
         if eh_posicao_livre(tab, pos):
             return pos
+
     return None
 
 # tab x int -> pos (or None)
@@ -298,6 +353,7 @@ def lateral_vazio(tab):
     for pos in (2,4,6,8):
         if eh_posicao_livre(tab, pos):
             return pos
+
     return None
 
 # str x str -> str
@@ -324,7 +380,7 @@ def jogo_do_galo(p, strat):
             pos = escolher_posicao_manual(tab)
         else:
             print(f'Turno do computador ({strat})')
-            pos = escolher_posicao_auto(tab, p, strat)
+            pos = escolher_posicao_auto(tab, turno, strat)
 
         tab = marcar_posicao(tab, turno, pos)
 
