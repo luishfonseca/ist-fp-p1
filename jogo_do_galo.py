@@ -31,8 +31,9 @@ def eh_posicao(univ):
 # tab x int -> vect
 def obter_coluna(tab, n):
     if not (
-            eh_tabuleiro(tab) and
-            type(n) == int and 1 <= n <= 3
+        eh_tabuleiro(tab) and
+        type(n) == int and
+        1 <= n <= 3
     ):
         raise ValueError('obter_coluna: algum dos argumentos e invalido')
 
@@ -45,8 +46,9 @@ def obter_coluna(tab, n):
 # tab x int -> vect
 def obter_linha(tab, n):
     if not (
-            eh_tabuleiro(tab) and
-            type(n) == int and 1 <= n <= 3
+       eh_tabuleiro(tab) and
+       type(n) == int and
+       1 <= n <= 3
     ):
         raise ValueError('obter_linha: algum dos argumentos e invalido')
 
@@ -55,8 +57,9 @@ def obter_linha(tab, n):
 # tab x int -> vect
 def obter_diagonal(tab, n):
     if not (
-            eh_tabuleiro(tab) and
-            type(n) == int and 1 <= n <= 2
+        eh_tabuleiro(tab) and
+        type(n) == int and
+        1 <= n <= 2
     ):
         raise ValueError('obter_diagonal: algum dos argumentos e invalido')
 
@@ -106,8 +109,8 @@ def linha_str(linha):
 # tab x pos -> int
 def obter_valor_posicao(tab, pos):
     if not (
-            eh_tabuleiro(tab) and
-            eh_posicao(pos)
+        eh_tabuleiro(tab) and
+        eh_posicao(pos)
     ):
         raise ValueError('obter_valor_posicao: algum dos argumentos e invalido')
 
@@ -117,8 +120,8 @@ def obter_valor_posicao(tab, pos):
 # tab x pos -> bool
 def eh_posicao_livre(tab, pos):
     if not (
-            eh_tabuleiro(tab) and
-            eh_posicao(pos)
+        eh_tabuleiro(tab) and
+        eh_posicao(pos)
     ):
         raise ValueError('eh_posicao_livre: algum dos argumentos e invalido')
 
@@ -179,10 +182,11 @@ def eh_vitoria(vect):
 # tab x int x pos -> tab
 def marcar_posicao(tab, v, pos):
     if not (
-            eh_tabuleiro(tab) and
-            v in (-1, 1) and
-            eh_posicao(pos) and
-            eh_posicao_livre(tab,pos)
+        eh_tabuleiro(tab) and
+        type(v) == int and
+        v in (-1, 1) and
+        eh_posicao(pos) and
+        eh_posicao_livre(tab,pos)
     ):
         raise ValueError('marcar_posicao: algum dos argumentos e invalido')
 
@@ -225,6 +229,7 @@ def escolher_posicao_manual(tab):
 def escolher_posicao_auto(tab, p, strat):
     if not (
         eh_tabuleiro(tab) and
+        type(p) == int and
         p in (-1, 1) and
         strat in ('basico', 'normal', 'perfeito')
     ):
@@ -279,33 +284,40 @@ def bloqueio(tab, p):
 # * x -
 def bifurcacao(tab, p):
     for pos in obter_posicoes_livres(tab):
-        total = 0
-        for lcd in obter_linhas_colunas_diagonais(tab, pos):
-            total += lcd.count(p)
-
-        if total >= 2:
+        if eh_intersecao(tab, pos, p):
             return pos
 
     return None
+
+# tab x pos x int -> bool
+def eh_intersecao(tab,pos,p):
+    total = 0
+    for lcd in obter_linhas_colunas_diagonais(tab, pos):
+        if lcd.count(0) == 2:
+            total += lcd.count(p)
+
+    return total >= 2
 
 # tab x int -> pos (or None)
 # o - o  o * -
 # - * -  - x -
 # - - -  - - o
 def bloqueio_bifurcacao(tab, p):
-    bifurcacoes = 0
-    for pos in obter_posicoes_livres(tab):
-        total = 0
-        for lcd in obter_linhas_colunas_diagonais(tab, pos):
-            total += lcd.count(-p)
-        if total >= 2:
-            bifurcacoes += 1
+    posicoes_livres = obter_posicoes_livres(tab)
+    intersecoes = ()
+    for pos in posicoes_livres:
+        if eh_intersecao(tab, pos, -p):
+            intersecoes += (pos, )
 
-    if bifurcacoes == 1:
-        return bifurcacao(tab, -p)
-    elif bifurcacoes > 1:
-        return lateral_vazio(tab)
+    if len(intersecoes) == 0:
+        return None
+    elif len(intersecoes) == 1:
+        return intersecoes[0]
     else:
+        for pos in posicoes_livres:
+            if pos not in intersecoes:
+                return pos
+
         return None
 
 # tab x int -> pos (or None)
