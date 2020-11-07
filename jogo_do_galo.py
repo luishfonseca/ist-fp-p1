@@ -120,7 +120,7 @@ def eh_posicao_livre(tab, pos):
             eh_tabuleiro(tab) and
             eh_posicao(pos)
     ):
-        raise ValueError('obter_valor_posicao: algum dos argumentos e invalido')
+        raise ValueError('eh_posicao_livre: algum dos argumentos e invalido')
 
     return obter_valor_posicao(tab,pos) == 0
 
@@ -365,7 +365,7 @@ def jogo_do_galo(p, strat):
         raise ValueError('jogo_do_galo: algum dos argumentos e invalido')
 
     print('Bem-vindo ao JOGO DO GALO.')
-    print(f'O jogador joga com \'{p}\'')
+    print('O jogador joga com \'{}\''.format(p))
 
     turnos = {
         'X': 1,
@@ -379,7 +379,7 @@ def jogo_do_galo(p, strat):
         if p == turno:
             pos = escolher_posicao_manual(tab)
         else:
-            print(f'Turno do computador ({strat})')
+            print('Turno do computador ({})'.format(strat))
             pos = escolher_posicao_auto(tab, turno, strat)
 
         tab = marcar_posicao(tab, turno, pos)
