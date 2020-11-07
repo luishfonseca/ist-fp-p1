@@ -3,21 +3,21 @@
 # univ -> bool
 def eh_tabuleiro(univ):
     if not (
-            isinstance(univ, tuple) and
+            type(univ) == tuple and
             len(univ) == 3
     ):
         return False
 
     for linha in univ:
         if not (
-                isinstance(linha, tuple) and
+                type(linha) == tuple and
                 len(linha) == 3
         ):
             return False
 
         for cell in linha:
             if not (
-                    isinstance(cell, int) and
+                    type(cell) == int and
                     -1 <= cell <= 1
             ):
                 return False
@@ -26,13 +26,13 @@ def eh_tabuleiro(univ):
 
 # univ -> bool
 def eh_posicao(univ):
-    return isinstance(univ, int) and 1 <= univ <= 9
+    return type(univ) == int and 1 <= univ <= 9
 
 # tab x int -> vect
 def obter_coluna(tab, n):
     if not (
             eh_tabuleiro(tab) and
-            isinstance(n, int) and 1 <= n <= 3
+            type(n) == int and 1 <= n <= 3
     ):
         raise ValueError('obter_coluna: algum dos argumentos e invalido')
 
@@ -46,7 +46,7 @@ def obter_coluna(tab, n):
 def obter_linha(tab, n):
     if not (
             eh_tabuleiro(tab) and
-            isinstance(n, int) and 1 <= n <= 3
+            type(n) == int and 1 <= n <= 3
     ):
         raise ValueError('obter_linha: algum dos argumentos e invalido')
 
@@ -56,7 +56,7 @@ def obter_linha(tab, n):
 def obter_diagonal(tab, n):
     if not (
             eh_tabuleiro(tab) and
-            isinstance(n, int) and 1 <= n <= 2
+            type(n) == int and 1 <= n <= 2
     ):
         raise ValueError('obter_diagonal: algum dos argumentos e invalido')
 
@@ -242,10 +242,8 @@ def escolher_posicao_auto(tab, p, strat):
     elif nivel >= 1 and bloqueio(tab, p):
         return bloqueio(tab, p)
     elif nivel == 2 and bifurcacao(tab, p):
-        print('bifurcacao', p)
         return bifurcacao(tab, p)
     elif nivel == 2 and bloqueio_bifurcacao(tab, p):
-        print('bloqueio_bifurcacao', p)
         return bloqueio_bifurcacao(tab, p)
     elif centro(tab):
         return centro(tab)
@@ -291,7 +289,7 @@ def bifurcacao(tab, p):
     return None
 
 # tab x int -> pos (or None)
-# o - o  o o -
+# o - o  o * -
 # - * -  - x -
 # - - -  - - o
 def bloqueio_bifurcacao(tab, p):
@@ -365,7 +363,7 @@ def jogo_do_galo(p, strat):
         raise ValueError('jogo_do_galo: algum dos argumentos e invalido')
 
     print('Bem-vindo ao JOGO DO GALO.')
-    print('O jogador joga com \'{}\''.format(p))
+    print('O jogador joga com \'{}\'.'.format(p))
 
     turnos = {
         'X': 1,
@@ -379,7 +377,7 @@ def jogo_do_galo(p, strat):
         if p == turno:
             pos = escolher_posicao_manual(tab)
         else:
-            print('Turno do computador ({})'.format(strat))
+            print('Turno do computador ({}):'.format(strat))
             pos = escolher_posicao_auto(tab, turno, strat)
 
         tab = marcar_posicao(tab, turno, pos)
