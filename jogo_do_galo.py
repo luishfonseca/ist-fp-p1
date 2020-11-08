@@ -1,7 +1,8 @@
 # 99266 Luis Fonseca
 
-# univ -> bool
 def eh_tabuleiro(univ):
+    """Verifica se o argumento e um tabuleiro 3x3 valido"""
+
     if not (
             type(univ) == tuple and
             len(univ) == 3
@@ -24,12 +25,14 @@ def eh_tabuleiro(univ):
 
     return True
 
-# univ -> bool
 def eh_posicao(univ):
+    """Verifica se o argumento e uma posicao valida"""
+
     return type(univ) == int and 1 <= univ <= 9
 
-# tab x int -> vect
 def obter_coluna(tab, n):
+    """Retorna um tuplo com os valores da coluna n de um tabuleiro tab"""
+
     if not (
         eh_tabuleiro(tab) and
         type(n) == int and
@@ -43,8 +46,9 @@ def obter_coluna(tab, n):
 
     return vect
 
-# tab x int -> vect
 def obter_linha(tab, n):
+    """Retorna um tuplo com os valores da linha n de um tabuleiro tab"""
+
     if not (
        eh_tabuleiro(tab) and
        type(n) == int and
@@ -54,8 +58,13 @@ def obter_linha(tab, n):
 
     return tab[n-1]
 
-# tab x int -> vect
 def obter_diagonal(tab, n):
+    """Retorna um tuplo com os valores de uma das diagonais de um tabuleiro tab
+
+    Quando n == 1 e retornada a diagonal descendente com origem na posicao 1
+    Quando n == 2 e retornada a diagonal ascendente com origem na posicao 7
+    """
+
     if not (
         eh_tabuleiro(tab) and
         type(n) == int and
@@ -76,8 +85,9 @@ def obter_diagonal(tab, n):
 
     return vect
 
-# tab -> str
 def tabuleiro_str(tab):
+    """Retorna a cadeia de carateres formatada do tabuleiro tab"""
+
     if not eh_tabuleiro(tab):
         raise ValueError('tabuleiro_str: o argumento e invalido')
 
@@ -89,8 +99,9 @@ def tabuleiro_str(tab):
 
     return out_str
 
-# vect -> str
 def linha_str(linha):
+    """Retorna a cadeia de carateres formatada da linha de um tabuleiro"""
+
     out_str = ''
 
     symbols = {
@@ -106,8 +117,9 @@ def linha_str(linha):
 
     return out_str
 
-# tab x pos -> int
 def obter_valor_posicao(tab, pos):
+    """Retorna o valor na posicao pos de um tabuleiro tab"""
+
     if not (
         eh_tabuleiro(tab) and
         eh_posicao(pos)
@@ -117,8 +129,9 @@ def obter_valor_posicao(tab, pos):
     pos -= 1
     return obter_linha(tab, (pos//3)+1)[(pos%3)]
 
-# tab x pos -> bool
 def eh_posicao_livre(tab, pos):
+    """Verifica se o tabuleiro tab tem a posicao pos livre"""
+
     if not (
         eh_tabuleiro(tab) and
         eh_posicao(pos)
@@ -127,10 +140,11 @@ def eh_posicao_livre(tab, pos):
 
     return obter_valor_posicao(tab,pos) == 0
 
-# tab -> vect
 def obter_posicoes_livres(tab):
+    """Retorna um tuplo com todas as posicoes livres num tabuleiro tab"""
+
     if not eh_tabuleiro(tab):
-        raise ValueError('obter_posicoes_livres: o argumento é invalido')
+        raise ValueError('obter_posicoes_livres: o argumento e invalido')
 
     vect = ()
     for n in range(1,10):
@@ -139,26 +153,33 @@ def obter_posicoes_livres(tab):
 
     return vect
 
-# tab x int -> vect
 def obter_linhas_colunas_diagonais(tab, n):
-        lcds = ()
+    """Retorna um tuplo com todas as linhas, colunas e diagonais de um
+    tabuleiro tab que passam pela posicao n
+    """
 
-        pos_l = ((n-1)//3)+1
-        lcds += (obter_linha(tab, pos_l), )
+    lcds = ()
 
-        pos_c = ((n-1)%3)+1
-        lcds += (obter_coluna(tab, pos_c), )
+    pos_l = ((n-1)//3)+1
+    lcds += (obter_linha(tab, pos_l), )
 
-        if n in (1,5,9):
-            lcds += (obter_diagonal(tab, 1), )
+    pos_c = ((n-1)%3)+1
+    lcds += (obter_coluna(tab, pos_c), )
 
-        if n in (3,5,7):
-            lcds += (obter_diagonal(tab, 2), )
+    if n in (1,5,9):
+        lcds += (obter_diagonal(tab, 1), )
 
-        return lcds
+    if n in (3,5,7):
+        lcds += (obter_diagonal(tab, 2), )
 
-# tab -> int
+    return lcds
+
 def jogador_ganhador(tab):
+    """Retorna o jogador ganhador caso este exista para um tabuleiro tab
+
+    Se o tabuleiro nao estiver numa condicao de vitoria e retornado 0
+    """
+
     if not eh_tabuleiro(tab):
         raise ValueError('jogador_ganhador: o argumento e invalido')
 
@@ -172,15 +193,17 @@ def jogador_ganhador(tab):
 
     return 0
 
-# vect -> bool
 def eh_vitoria(vect):
+    """Verifica se uma dada linha/coluna/diagonal esta numa condicao de vitoria"""
+
     if not len(vect) == 3:
         raise ValueError('eh_vitoria: o argumento e invalido')
 
     return vect[0] != 0 and vect[0] == vect[1] == vect[2]
 
-# tab x int x pos -> tab
 def marcar_posicao(tab, v, pos):
+    """Retorna o tabuleiro tab com o valor na posicao pos mudado para v"""
+
     if not (
         eh_tabuleiro(tab) and
         type(v) == int and
@@ -199,8 +222,9 @@ def marcar_posicao(tab, v, pos):
 
     return new_tab
 
-# vect x int x pos -> vect
 def marcar_linha(vect, v, pos):
+    """Retorna a linha vect com o valor na posicao pos mudado para v"""
+
     new_linha = ()
     for n in range(3):
         if n == (pos-1)%3:
@@ -210,8 +234,13 @@ def marcar_linha(vect, v, pos):
 
     return new_linha
 
-# tab -> pos
 def escolher_posicao_manual(tab):
+    """Pede ao utilizador que escolha a jogada seguinte
+
+    Pede ao utilizador que insira uma posicao valida no tabuleiro tab
+    Caso valida essa posicao sera a jogada seguinte
+    """
+
     if not eh_tabuleiro(tab):
         raise ValueError('escolher_posicao_manual: o argumento e invalido')
 
@@ -225,12 +254,16 @@ def escolher_posicao_manual(tab):
 
     return pos
 
-# tab x int x str -> pos
-def escolher_posicao_auto(tab, p, strat):
+def escolher_posicao_auto(tab, j, strat):
+    """Dependendo da estrategia, determina automaticamente a jogada seguinte
+
+    A funcao chama funcoes auxiliares para cada uma das acoes quando esta se aplica
+    Dependendo da estrategia certas acoes sao ignoradas
+    """
     if not (
         eh_tabuleiro(tab) and
-        type(p) == int and
-        p in (-1, 1) and
+        type(j) == int and
+        j in (-1, 1) and
         strat in ('basico', 'normal', 'perfeito')
     ):
         raise ValueError('escolher_posicao_auto: algum dos argumentos e invalido')
@@ -242,151 +275,205 @@ def escolher_posicao_auto(tab, p, strat):
     }
     nivel = niveis[strat]
 
-    if nivel >= 1 and vitoria(tab, p):
-        return vitoria(tab, p)
-    elif nivel >= 1 and bloqueio(tab, p):
-        return bloqueio(tab, p)
-    elif nivel == 2 and bifurcacao(tab, p):
-        return bifurcacao(tab, p)
-    elif nivel == 2 and bloqueio_bifurcacao(tab, p):
-        return bloqueio_bifurcacao(tab, p)
+    if nivel >= 1 and vitoria(tab, j):
+        return vitoria(tab, j)
+    elif nivel >= 1 and bloqueio(tab, j):
+        return bloqueio(tab, j)
+    elif nivel == 2 and bifurcacao(tab, j):
+        return bifurcacao(tab, j)
+    elif nivel == 2 and bloqueio_bifurcacao(tab, j):
+        return bloqueio_bifurcacao(tab, j)
     elif centro(tab):
         return centro(tab)
-    elif nivel >= 1 and canto_oposto(tab, p):
-        return canto_oposto(tab, p)
+    elif nivel >= 1 and canto_oposto(tab, j):
+        return canto_oposto(tab, j)
     elif canto_vazio(tab):
         return canto_vazio(tab)
     elif lateral_vazio(tab):
         return lateral_vazio(tab)
 
-# tab x int -> pos (or None)
-# x - -
-# - x -
-# - - +
-def vitoria(tab, p):
+def vitoria(tab, j):
+    """Executa a estrategia vitoria"""
+
+    # Uma das linhas/colunas/diagonais tem 2 pecas do jogador j e um espaco vazio
+
     for pos in obter_posicoes_livres(tab):
         for lcd in obter_linhas_colunas_diagonais(tab, pos):
-            if lcd.count(p) == 2:
+            if lcd.count(j) == 2:
                 return pos
 
     return None
 
-# tab x int -> pos (or None)
-# o - -
-# o - -
-# + - -
-def bloqueio(tab, p):
-    return vitoria(tab, -p)
+def bloqueio(tab, j):
+    """Executa a estrategia bloqueio"""
 
-# tab x int -> pos (or None)
-# x - -
-# - - -
-# * x -
-def bifurcacao(tab, p):
+    # Se uma das linhas/colunas/diagonais tem 2 pecas do oponente do jogador j e um espaco livre
+    # Retornar o espaco livre
+
+
+    # bloqueio utiliza a mesma logica que vitoria sendo assim possivel reutilizar o codigo
+    # -j e o oponente de j
+    return vitoria(tab, -j)
+
+def bifurcacao(tab, j):
+    """Executa a estrategia bifurcacao"""
+
+    # Se existir um espaco livre numa intersecao de pecas do jogador j
+    # Retornar o espaco livre
+
     for pos in obter_posicoes_livres(tab):
-        if eh_intersecao(tab, pos, p):
+        if eh_intersecao(tab, pos, j):
             return pos
 
     return None
 
-# tab x pos x int -> bool
-def eh_intersecao(tab,pos,p):
+def eh_intersecao(tab,pos,j):
+    """Verifica se a posicao pos de encontra numa intersecao de pecas do jogador j"""
+
+    # Caso a posicao pos se encontre em duas ou mais linhas/colunas/diagonais
+    # com pecas do jogador j tem-se que a pos se encontra numa intersecao
+
     total = 0
     for lcd in obter_linhas_colunas_diagonais(tab, pos):
         if lcd.count(0) == 2:
-            total += lcd.count(p)
+            total += lcd.count(j)
 
     return total >= 2
 
-# tab x int -> pos (or None)
-# o - o  o * -
-# - * -  - x -
-# - - -  - - o
-def bloqueio_bifurcacao(tab, p):
+def bloqueio_bifurcacao(tab, j):
+    """Executa a estrategia bloqueio de bifurcacao"""
+
+    # Impede o oponente do jogador j de realizar um bifurcacao
+
     posicoes_livres = obter_posicoes_livres(tab)
     intersecoes = ()
     for pos in posicoes_livres:
-        if eh_intersecao(tab, pos, -p):
+        if eh_intersecao(tab, pos, -j):
             intersecoes += (pos, )
 
     if len(intersecoes) == 0:
         return None
     elif len(intersecoes) == 1:
+        # Se existir apenas um espaco livre numa intersecao de pecas do oponente do jogador j
+        # Retorna esse espaco
         return intersecoes[0]
     else:
-        for pos in posicoes_livres:
+        # Caso exista mais que um espaco livre
+        # O jogado j forca o oponente a jogar numa posicao que nao crie uma bifurcacao.
+
+        # Esta inversao e desnecessaria mas remove a simetria em comparacao ao exemplo do enunciado
+        for pos in posicoes_livres[::-1]:
             if pos not in intersecoes:
-                return pos
 
-        return None
+                # Impedir a criacao de uma bifurcacao implica impedir o oponente de jogar numa intersecao
+                acao = forcar_jogada_lc(tab, j, pos)
+                if acao:
+                    return acao
 
-# tab x int -> pos (or None)
-# - - -
-# - * -
-# - - -
+def forcar_jogada_lc(tab, j, pos):
+    """Retorna a posicao que forca o oponente de j a jogar na posicao pos no turno seguinte
+
+    Apenas se aplica a linhas e colunas
+    """
+
+    pos_l = (pos-1)//3
+    pos_c = (pos-1)%3
+
+    lin = obter_linha(tab, pos_l+1)
+    col = obter_coluna(tab, pos_c+1)
+    # A verificacao das diagonais e desnecessaria uma vez que as posicoes
+    # livres que nao sao intersecoes nunca se encontram nos cantos
+
+    # Caso a linha tenha uma peca do jogador e dois vazios
+    # jogasse na posicao vazia que nao e a que se deseja forcar
+    if j in lin:
+        for c in range(3):
+            if c != pos_c and lin[c] == 0:
+                return (pos_l*3+c)+1
+
+    # Mesma logica para colunas
+    if j in col:
+        for l in range(3):
+            if l != pos_l and col[l] == 0:
+                return (l*3+pos_c)+1
+
+    return None
+
 def centro(tab):
+    """Executa a estrategia centro"""
+
+    # Se o centro esta livre
+    # Retornar a posicao central
+
     if eh_posicao_livre(tab, 5):
         return 5
 
     return None
 
-# tab x int -> pos (or None)
-# - - o
-# - - -
-# * - -
-def canto_oposto(tab, p):
+def canto_oposto(tab, j):
+    """Executa a estrategia canto oposto"""
+
+    # Se dos cantos (posicoes 1,3,7,9) tiver uma peca do oponente do jogador j
+    # Retornar o canto oposto caso estaja livre
+
     for pos in (1,3,7,9):
         if (
             eh_posicao_livre(tab, pos) and
-            obter_valor_posicao(tab, 10-pos) == -p
+            obter_valor_posicao(tab, 10-pos) == -j
         ):
             return pos
 
     return None
 
-# tab x int -> pos (or None)
-# * - -
-# - - -
-# - - -
 def canto_vazio(tab):
+    """Executa a estrategia canto vazio"""
+
+    # Retornar um dos cantos caso estejam livres
+
     for pos in (1,3,7,9):
         if eh_posicao_livre(tab, pos):
             return pos
 
     return None
 
-# tab x int -> pos (or None)
-# - - -
-# - - *
-# - - -
 def lateral_vazio(tab):
+    """Executa a estrategia lateral vazio"""
+
+    # Retornar uma das laterais (posicoes 2,4,6,8) caso estejam livres
+
     for pos in (2,4,6,8):
         if eh_posicao_livre(tab, pos):
             return pos
 
     return None
 
-# str x str -> str
-def jogo_do_galo(p, strat):
+def jogo_do_galo(j, strat):
+    """Ponto de entrada do programa. Retorna o vencedor do jogo
+
+    Pede o simbolo do jogador humano e a estrategia para o algoritmo
+    Esta funcao repete ate um vencedor ser determinado
+    """
+
     if not (
-        p in ('X','O') and
+        j in ('X','O') and
         strat in ('basico','normal','perfeito')
     ):
         raise ValueError('jogo_do_galo: algum dos argumentos e invalido')
 
     print('Bem-vindo ao JOGO DO GALO.')
-    print('O jogador joga com \'{}\'.'.format(p))
+    print('O jogador joga com \'{}\'.'.format(j))
 
     turnos = {
         'X': 1,
         'O': -1
     }
-    p = turnos[p]
+    j = turnos[j]
 
     tab = ((0,)*3,)*3
     turno = 1
     while jogador_ganhador(tab) == 0 and len(obter_posicoes_livres(tab)) > 0:
-        if p == turno:
+
+        if j == turno:
             pos = escolher_posicao_manual(tab)
         else:
             print('Turno do computador ({}):'.format(strat))
@@ -396,6 +483,7 @@ def jogo_do_galo(p, strat):
 
         print(tabuleiro_str(tab))
 
+        # no proximo turno joga o oponente do jogador do turno atual
         turno *= -1
 
     resultados = {
