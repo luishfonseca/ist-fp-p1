@@ -362,13 +362,20 @@ def bloqueio_bifurcacao(tab, j):
         # O jogado j forca o oponente a jogar numa posicao que nao crie uma bifurcacao.
 
         # Esta inversao e desnecessaria mas remove a simetria em comparacao ao exemplo do enunciado
-        for pos in posicoes_livres[::-1]:
+        possibilidades = ()
+        for pos in posicoes_livres:
             if pos not in intersecoes:
 
                 # Impedir a criacao de uma bifurcacao implica impedir o oponente de jogar numa intersecao
                 acao = forcar_jogada_lc(tab, j, pos)
                 if acao:
-                    return acao
+                    possibilidades += (acao, )
+
+        for pos in posicoes_livres:
+            if pos in possibilidades:
+                return pos
+
+        return None
 
 def forcar_jogada_lc(tab, j, pos):
     """Retorna a posicao que forca o oponente de j a jogar na posicao pos no turno seguinte
