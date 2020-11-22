@@ -1,10 +1,8 @@
 # 99266 Luis Fonseca
 
 def eh_tabuleiro(var):
-    """Devolve se o seu argumento corresponde a um tabuleiro.
-
-    eh_tabuleiro: universal -> booleano
-    """
+    # eh_tabuleiro: universal -> booleano
+    """Devolve se o seu argumento corresponde a um tabuleiro."""
 
     if not (type(var) == tuple and len(var) == 3):
         return False
@@ -21,20 +19,16 @@ def eh_tabuleiro(var):
 
 
 def eh_posicao(var):
-    """Devolve se o seu argumento corresponde a uma posicao.
-
-    eh_posicao: universal -> booleano
-    """
+    # eh_posicao: universal -> booleano
+    """Devolve se o seu argumento corresponde a uma posicao."""
 
     return type(var) == int and 1 <= var <= 9
 
 
 def obter_coluna(tab, n):
+    # obter_coluna: tabuleiro x inteiro -> tuplo
     """Devolve um tuplo com os valores da coluna correspondente ao inteiro
-    dado.
-
-    obter_coluna: tabuleiro x inteiro -> tuplo
-    """
+        dado."""
 
     if not (eh_tabuleiro(tab) and type(n) == int and 1 <= n <= 3):
         raise ValueError('obter_coluna: algum dos argumentos e invalido')
@@ -47,10 +41,9 @@ def obter_coluna(tab, n):
 
 
 def obter_linha(tab, n):
-    """Devolve um tuplo com os valores da linha correspondente ao inteiro dado.
-
-    obter_linha: tabuleiro x inteiro -> tuplo
-    """
+    # obter_linha: tabuleiro x inteiro -> tuplo
+    """Devolve um tuplo com os valores da linha correspondente ao inteiro
+        dado."""
 
     if not (eh_tabuleiro(tab) and type(n) == int and 1 <= n <= 3):
         raise ValueError('obter_linha: algum dos argumentos e invalido')
@@ -59,11 +52,9 @@ def obter_linha(tab, n):
 
 
 def obter_diagonal(tab, n):
+    # obter_diagonal: tabuleiro x inteiro -> tuplo
     """Devolve um tuplo com os valores da diagonal correspondente ao inteiro
-    dado.
-
-    obter_diagonal: tabuleiro x inteiro -> tuplo
-    """
+        dado."""
 
     if not (eh_tabuleiro(tab) and type(n) == int and 1 <= n <= 2):
         raise ValueError('obter_diagonal: algum dos argumentos e invalido')
@@ -83,10 +74,8 @@ def obter_diagonal(tab, n):
 
 
 def tabuleiro_str(tab):
-    """Devolve a cadeia de caracteres que representa o tabuleiro dado.
-
-    tabuleiro_str: tabuleiro -> cad. caracteres
-    """
+    # tabuleiro_str: tabuleiro -> cad. caracteres
+    """Devolve a cadeia de caracteres que representa o tabuleiro dado."""
 
     if not eh_tabuleiro(tab):
         raise ValueError('tabuleiro_str: o argumento e invalido')
@@ -101,10 +90,8 @@ def tabuleiro_str(tab):
 
 
 def linha_str(linha):
-    """Devolve a cadeia de caracteres que representa a linha dada.
-
-    lin_str: tuplo -> cad. caracteres
-    """
+    # lin_str: tuplo -> cad. caracteres
+    """Devolve a cadeia de caracteres que representa a linha dada."""
 
     if not (type(linha) == tuple and len(linha) == 3):
         raise ValueError('linha_str: o argumento e invalido')
@@ -121,10 +108,8 @@ def linha_str(linha):
 
 
 def obter_valor_posicao(tab, pos):
-    """Devolve um inteiro com o valor da marca na posicao dada.
-
-    obter_valor_posicao: tabuleiro x posicao -> inteiro
-    """
+    # obter_valor_posicao: tabuleiro x posicao -> inteiro
+    """Devolve um inteiro com o valor da marca na posicao dada."""
 
     if not (eh_tabuleiro(tab) and eh_posicao(pos)):
         raise ValueError('obter_valor_posicao: algum dos argumentos e invalido')
@@ -135,10 +120,8 @@ def obter_valor_posicao(tab, pos):
 
 
 def eh_posicao_livre(tab, pos):
-    """Devolve se a dada posicao se encontra livre.
-
-    eh_posicao_livre: tabuleiro x posicao -> booleano
-    """
+    # eh_posicao_livre: tabuleiro x posicao -> booleano
+    """Devolve se a dada posicao se encontra livre."""
 
     if not (eh_tabuleiro(tab) and eh_posicao(pos)):
         raise ValueError('eh_posicao_livre: algum dos argumentos e invalido')
@@ -147,10 +130,9 @@ def eh_posicao_livre(tab, pos):
 
 
 def obter_posicoes_livres(tab):
-    """Devolve o tuplo ordenado com todas as posicoes livres do tabuleiro dado.
-
-    obter_posicoes_livres: tabuleiro -> tuplo
-    """
+    # obter_posicoes_livres: tabuleiro -> tuplo
+    """Devolve o tuplo ordenado com todas as posicoes livres do tabuleiro
+        dado."""
 
     if not eh_tabuleiro(tab):
         raise ValueError('obter_posicoes_livres: o argumento e invalido')
@@ -164,11 +146,9 @@ def obter_posicoes_livres(tab):
 
 
 def obter_linhas_colunas_diagonais(tab, pos):
+    # obter_linhas_colunas_diagonais: tabuleiro x posicao -> tuplo
     """Devolve um tuplo com os tuplos correspondentes a todas as linhas,
-    colunas e diagonais a que essa posicao pertence.
-
-    obter_linhas_colunas_diagonais: tabuleiro x posicao -> tuplo
-    """
+        colunas e diagonais a que essa posicao pertence."""
 
     if not (eh_tabuleiro(tab) and eh_posicao(pos)):
         raise ValueError('obter_linhas_colunas_diagonais: algum dos argumentos e invalido')
@@ -191,10 +171,8 @@ def obter_linhas_colunas_diagonais(tab, pos):
 
 
 def jogador_ganhador(tab):
-    """Devolve o inteiro a correspondente ao jogador que ganhou a partida.
-
-    jogador_ganhador: tabuleiro -> inteiro
-    """
+    # jogador_ganhador: tabuleiro -> inteiro
+    """Devolve o inteiro a correspondente ao jogador que ganhou a partida."""
 
     if not eh_tabuleiro(tab):
         raise ValueError('jogador_ganhador: o argumento e invalido')
@@ -213,10 +191,8 @@ def jogador_ganhador(tab):
 
 
 def marcar_posicao(tab, j, pos):
-    """Devolve um tabuleiro com a marca do jogador na posicao dada.
-
-    marcar_posicao: tabuleiro x inteiro x posicao -> tabuleiro
-    """
+    # marcar_posicao: tabuleiro x inteiro x posicao -> tabuleiro
+    """Devolve um tabuleiro com a marca do jogador na posicao dada."""
 
     if not (
         eh_tabuleiro(tab) and
@@ -237,11 +213,9 @@ def marcar_posicao(tab, j, pos):
 
 
 def marcar_linha(vect, j, pos):
+    # marcar_linha: tuplo x inteiro x posicao -> tuplo
     """Devolve um tuplo representante de uma linha com a marca do jogador na
-    posicao dada.
-
-    marcar_linha: tuplo x inteiro x posicao -> tuplo
-    """
+        posicao dada."""
 
     new_linha = ()
     for n in range(3):
@@ -254,11 +228,9 @@ def marcar_linha(vect, j, pos):
 
 
 def escolher_posicao_manual(tab):
+    # escolher_posicao_manual: tabuleiro -> posicao
     """Esta funcao realiza a leitura de uma posicao introduzida manualmente por
-    um jogador e devolve esta posicao escolhida.
-
-    escolher_posicao_manual: tabuleiro -> posicao
-    """
+        um jogador e devolve esta posicao escolhida."""
 
     if not eh_tabuleiro(tab):
         raise ValueError('escolher_posicao_manual: o argumento e invalido')
@@ -272,11 +244,9 @@ def escolher_posicao_manual(tab):
 
 
 def escolher_posicao_auto(tab, j, strat):
+    # escolher_posicao_auto: tabuleiro x inteiro x cad. caracteres -> posicao
     """Devolve a posicao escolhida automaticamente de acordo com a estrategia
-    selecionada.
-
-    escolher_posicao_auto: tabuleiro x inteiro x cad. caracteres -> posicao
-    """
+        selecionada."""
 
     if not (
         eh_tabuleiro(tab) and
@@ -306,21 +276,17 @@ def escolher_posicao_auto(tab, j, strat):
 
 
 def eh_mais_avancada(strat, outra_strat):
+    # eh_mais_avancada: cad. caracteres x cad. caracteres -> booleano
     """Devolve se a primeira estrategia e mais ou igualmente avancada em
-    comparacao a segunda.
-
-    eh_mais_avancada: cad. caracteres x cad. caracteres -> booleano
-    """
+        comparacao a segunda."""
 
     strats = { 'basico': 0, 'normal': 1, 'perfeito': 2 }
     return strats[strat] >= strats[outra_strat]
 
 
 def vitoria(tab, j):
-    """Se o jogador tiver um dois em linha devolve a posicao livre restante.
-
-    vitoria: tabuleiro x inteiro -> posicao
-    """
+    # vitoria: tabuleiro x inteiro -> posicao
+    """Se o jogador tiver um dois em linha devolve a posicao livre restante."""
 
     for pos in obter_posicoes_livres(tab):
         for lcd in obter_linhas_colunas_diagonais(tab, pos):
@@ -331,10 +297,9 @@ def vitoria(tab, j):
 
 
 def bloqueio(tab, j):
-    """Se o adversario tiver um dois em linha devolve a posicao livre restante.
-
-    bloqueio: tabuleiro x inteiro -> posicao
-    """
+    # bloqueio: tabuleiro x inteiro -> posicao
+    """Se o adversario tiver um dois em linha devolve a posicao livre
+        restante."""
 
     # bloqueio utiliza a mesma logica que vitoria sendo assim possivel
     # reutilizar o codigo -j e o oponente de j
@@ -342,10 +307,8 @@ def bloqueio(tab, j):
 
 
 def bifurcacao(tab, j):
-    """Se o jogador tiver uma posicao de bifurcacao devolve essa posicao.
-
-    bifurcacao: tabuleiro x inteiro -> posicao
-    """
+    # bifurcacao: tabuleiro x inteiro -> posicao
+    """Se o jogador tiver uma posicao de bifurcacao devolve essa posicao."""
 
     for pos in obter_posicoes_livres(tab):
         if eh_intersecao(tab, pos, j):
@@ -355,11 +318,9 @@ def bifurcacao(tab, j):
 
 
 def eh_intersecao(tab,pos,j):
+    # eh_intersecao: tabuleiro x posicao x inteiro -> booleano
     """Verifica se a posicao se encontra em duas ou mais linhas, colunas ou
-    diagonais com pecas do jogador.
-
-    eh_intersecao: tabuleiro x posicao x inteiro -> booleano
-    """
+        diagonais com pecas do jogador."""
 
     total = 0
     for lcd in obter_linhas_colunas_diagonais(tab, pos):
@@ -370,12 +331,10 @@ def eh_intersecao(tab,pos,j):
 
 
 def bloqueio_bifurcacao(tab, j):
+    # bloqueio_bifurcacao: tabuleiro x inteiro -> posicao
     """Se o oponente tiver apenas uma posicao de bifurcacao devolve essa
-    posicao. Caso exista mais do que uma bifurcacao devolve a primeira
-    posicao que impede o oponente de tirar partido da situacao.
-
-    bloqueio_bifurcacao: tabuleiro x inteiro -> posicao
-    """
+        posicao. Caso exista mais do que uma bifurcacao devolve a primeira
+        posicao que impede o oponente de tirar partido da situacao."""
 
     intersecoes = ()
     for pos in obter_posicoes_livres(tab):
@@ -390,11 +349,9 @@ def bloqueio_bifurcacao(tab, j):
         return bloqueio_bifurcacoes(intersecoes, tab, j)
 
 def bloqueio_bifurcacoes(intersecoes, tab, j):
+    # bloqueio_bifurcacoes: tuplo x tabuleiro x inteiro -> posicao
     """Devolve a posicao que impede a criacao de uma bifurcacao quando existem
-    mais do que uma posicao que a crie.
-
-    bloqueio_bifurcacoes: tuplo x tabuleiro x inteiro -> posicao
-    """
+        mais do que uma posicao que a crie."""
 
     posicoes_livres = obter_posicoes_livres(tab)
 
@@ -416,11 +373,9 @@ def bloqueio_bifurcacoes(intersecoes, tab, j):
 
 
 def forcar_jogada_lc(tab, j, pos):
+    # forcar_jogada_lc: tabuleiro x inteiro x posicao -> posicao
     """Devolve a posicao que forca o oponente a jogar na dada posicao no turno
-    seguinte. Apenas se aplica a linhas e colunas.
-
-    forcar_jogada_lc: tabuleiro x inteiro x posicao -> posicao
-    """
+        seguinte. Apenas se aplica a linhas e colunas."""
 
     linha = (pos-1)//3
     coluna = (pos-1)%3
@@ -444,10 +399,8 @@ def forcar_jogada_lc(tab, j, pos):
 
 
 def centro(tab, _):
-    """Devolve a posicao central se esta estiver livre.
-
-    centro: tabuleiro -> posicao
-    """
+    # centro: tabuleiro -> posicao
+    """Devolve a posicao central se esta estiver livre."""
 
     if eh_posicao_livre(tab, 5):
         return 5
@@ -456,11 +409,9 @@ def centro(tab, _):
 
 
 def canto_oposto(tab, j):
+    # canto_oposto: tabuleiro x inteiro -> posicao
     """Se o oponente tiver uma marca num canto do tabuleiro diagonalmente
-    oposto a uma posicao livre devolve essa posicao.
-
-    canto_oposto: tabuleiro x inteiro -> posicao
-    """
+        oposto a uma posicao livre devolve essa posicao."""
 
     for pos in (1,3,7,9):
         if (
@@ -473,10 +424,8 @@ def canto_oposto(tab, j):
 
 
 def canto_vazio(tab, _):
-    """Devolve o primeiro canto que e uma posicao livre caso exista.
-
-    canto_vazio: tabuleiro -> posicao
-    """
+    # canto_vazio: tabuleiro -> posicao
+    """Devolve o primeiro canto que e uma posicao livre caso exista."""
 
     for pos in (1,3,7,9):
         if eh_posicao_livre(tab, pos):
@@ -486,10 +435,8 @@ def canto_vazio(tab, _):
 
 
 def lateral_vazio(tab, _):
-    """Devolve a primeira lateral que e uma posicao livre caso exista.
-
-    lateral_vazio: tabuleiro -> posicao
-    """
+    # lateral_vazio: tabuleiro -> posicao
+    """Devolve a primeira lateral que e uma posicao livre caso exista."""
 
     for pos in (2,4,6,8):
         if eh_posicao_livre(tab, pos):
@@ -499,11 +446,9 @@ def lateral_vazio(tab, _):
 
 
 def jogo_do_galo(j, strat):
+    # jogo_do_galo: cad. caracteres x cad. caracteres -> cad. caracteres
     """Esta funcao corresponde a funcao principal que permite jogar um jogo
-    completo de Jogo do Galo de uma jogador contra o computador.
-
-    jogo_do_galo: cad. caracteres x cad. caracteres -> cad. caracteres
-    """
+        completo de Jogo do Galo de uma jogador contra o computador."""
 
     if not (j in ('X','O') and strat in ('basico','normal','perfeito')):
         raise ValueError('jogo_do_galo: algum dos argumentos e invalido')
@@ -527,10 +472,8 @@ def jogo_do_galo(j, strat):
 
 
 def jogar_turno(turno, strat, tab, j):
-    """Devolve o tabuleiro modificado apos o turno.
-
-    jogar_turno: inteiro x cad. caracteres x tabuleiro x inteiro -> tabuleiro
-    """
+    # jogar_turno: inteiro x cad. caracteres x tabuleiro x inteiro -> tabuleiro
+    """Devolve o tabuleiro modificado apos o turno."""
 
     if j == turno:
         pos = escolher_posicao_manual(tab)
@@ -539,4 +482,3 @@ def jogar_turno(turno, strat, tab, j):
         pos = escolher_posicao_auto(tab, turno, strat)
 
     return marcar_posicao(tab, turno, pos)
-
